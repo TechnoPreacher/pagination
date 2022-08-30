@@ -1,10 +1,13 @@
 <?php
 require_once 'SimplePaginator.php';
 
-$Paginator =  SimplePaginator::getInstance('posts.json');
+$Paginator = SimplePaginator::getInstance('posts.json');
 
 if (isset($_GET['k'])) {
-$k= $_GET['k'];} else {$k=1;}
+    $k = $_GET['k'];
+} else {
+    $k = 1;
+}
 $results = $Paginator->getDataRows($k);
 $numberOfLinks = $Paginator->getNumberOfPages();
 ?>
@@ -20,8 +23,8 @@ $numberOfLinks = $Paginator->getNumberOfPages();
 </head>
 
 <style>
-    .table-striped>tbody>tr:nth-child(even)>td,
-    .table-striped>tbody>tr:nth-child(even)>th {
+    .table-striped > tbody > tr:nth-child(even) > td,
+    .table-striped > tbody > tr:nth-child(even) > th {
         background-color: limegreen;
     }
 </style>
@@ -29,28 +32,28 @@ $numberOfLinks = $Paginator->getNumberOfPages();
 <body>
 
 <div class="container-fluid">
-<nav aria-label="...">
-    <ul class="pagination pagination-lg justify-content-center">
-        <?php for ($i = 1; $i <= $numberOfLinks; $i++) : ?>
-            <li class="page-item"><a class="page-link" href="?k=<?php echo $i ?>"><?php echo $i ?></a></li>
-        <?php endfor; ?>
-    </ul>
-</nav>
+    <nav aria-label="...">
+        <ul class="pagination pagination-lg justify-content-center">
+            <?php for ($i = 1; $i <= $numberOfLinks; $i++) : ?>
+                <li class="page-item"><a class="page-link" href="?k=<?php echo $i ?>"><?php echo $i ?></a></li>
+            <?php endfor; ?>
+        </ul>
+    </nav>
 </div>
 
 <div class="container-fluid">
     <br>
-        <table class="table table-striped table-condensed table-bordered table-rounded">
-            <tbody>
-            <?php for ($i = 0; $i < count($results->rows); $i++) : ?>
-                <tr>
-                    <td><?php echo $results->rows[$i]['title']; ?></td>
-                    <td><?php echo $results->rows[$i]['author']; ?></td>
-                    <td><?php echo$results->rows[$i]['content']; ?></td>
-                </tr>
-            <?php endfor; ?>
-           </tbody>
-        </table>
+    <table class="table table-striped table-condensed table-bordered table-rounded">
+        <tbody>
+        <?php for ($i = 0; $i < count($results->rows); $i++) : ?>
+            <tr>
+                <td><?php echo $results->rows[$i]['title']; ?></td>
+                <td><?php echo $results->rows[$i]['author']; ?></td>
+                <td><?php echo $results->rows[$i]['content']; ?></td>
+            </tr>
+        <?php endfor; ?>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>

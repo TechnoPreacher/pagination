@@ -41,9 +41,9 @@ class SimplePaginator
         foreach ($rows as $v) {
             $i++;
             $dataForPage[] = [
-                'title'=>$v['title'],
-                'author'=> $v['author'],
-               'content'=> $v['content']
+                'title' => $v['title'],
+                'author' => $v['author'],
+                'content' => $v['content']
             ];
 
             if (gmp_mod($i, 5) == 0)//каждый 5ый элемент - новая страница данных
@@ -56,8 +56,9 @@ class SimplePaginator
                 $pages[$page->index] = $page;
             }
         }
+
         self::$dataRows = $pages;
-        self::$numberOfPages =ceil(count($pages));
+        self::$numberOfPages = ceil(count($pages));
         return $pages;
     }
 
