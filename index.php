@@ -3,13 +3,14 @@ require_once 'SimplePaginator.php';
 
 $Paginator = SimplePaginator::getInstance('posts.json');
 
-if (isset($_GET['k'])) {
-    $k = $_GET['k'];
-} else {
-    $k = 1;
-}
-$results = $Paginator->getDataRows($k);
 $numberOfLinks = $Paginator->getNumberOfPages();
+$k = isset($_GET['k']) ? $_GET['k'] : 1;
+$k = is_numeric($k) ? $k : 1;
+$k = in_array($k, range(1,$numberOfLinks)) ? $k : 1;
+
+
+$results = $Paginator->getDataRows($k);
+
 ?>
 
 <!DOCTYPE html>
@@ -31,12 +32,20 @@ $numberOfLinks = $Paginator->getNumberOfPages();
 
 <body>
 
+<?php
+
+?>
+
 <div class="container-fluid">
     <nav aria-label="...">
         <ul class="pagination pagination-lg justify-content-center">
-            <?php for ($i = 1; $i <= $numberOfLinks; $i++) : ?>
-                <li class="page-item"><a class="page-link" href="?k=<?php echo $i ?>"><?php echo $i ?></a></li>
+            <li class="page-item"><a class="page-link" href="?k=<?= $k<=1 ? 1 : $k-1 ?>">Previos</a></li>
+            <?php for ($i = 1; $i <= $numberOfLinks; $i++) :?>
+                <li class="page-item <?= $i == $k ? 'active' : '' ?>">
+                    <a class="page-link" href="?k=<?= $i ?>"><?= $i ?></a>
+                </li>
             <?php endfor; ?>
+            <li class="page-item"><a class="page-link" href="?k=<?= $k>=$numberOfLinks ? $numberOfLinks : $k+1 ?>">Next</a></li>
         </ul>
     </nav>
 </div>
